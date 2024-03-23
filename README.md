@@ -1,3 +1,7 @@
 <h3>What is inside the handle_connection method?</h3>
 
 Fungsi handle_connection bertanggung jawab untuk memproses aliran TCP yang masuk. Ketika handle_connection membaca TCP stream, itu akan membaca setiap baris dari stream tersebut hingga menemui baris kosong. Setelah baris kosong ditemui, akan mengumpulkan semua baris ini ke dalam sebuah vektor yang kemudian akan dicetak sebagai permintaan HTTP untuk inspeksi.
+
+<h3>What you have learned about the new code the handle_connection?</h3>
+Fungsi handle_connection yang dimodifikasi dapat mengirimkan respons HTTP kembali ke client. Baris tambahan dalam fungsi tersebut mengatur status_line yang menandakan bahwa respons HTTP adalah 200 OK, menandakan keberhasilan permintaan. Selanjutnya, fungsi tersebut membaca isi dari file bernama hello.html ke dalam sebuah string menggunakan fs::read_to_string(). Langkah ini berarti ada file bernama hello.html dalam direktori yang sama dengan file eksekusi. Setelah itu, panjang string konten dihitung, dan respons HTTP diformat termasuk status line, panjang konten, dan isi dari file hello.html. Respons tersebut kemudian dikirimkan kembali ke klien melalui TCP stream menggunakan write_all(). Dapat disimpulkan, fungsi handle_connection yang dimodifikasi membaca isi file hello.html, menyusun respons HTTP dengan status 200 OK, dan mengirimkannya kembali ke klien melalui TCP stream.
+![Commit 2 screen capture](assets/images/commit2.png)
