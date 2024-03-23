@@ -7,13 +7,16 @@ Fungsi handle_connection bertanggung jawab untuk memproses aliran TCP yang masuk
 <h3>Commit 2</h3>
 <h4>What you have learned about the new code the handle_connection?</h4>
 Fungsi handle_connection yang dimodifikasi dapat mengirimkan respons HTTP kembali ke client. Baris tambahan dalam fungsi tersebut mengatur status_line yang menandakan bahwa respons HTTP adalah 200 OK, menandakan keberhasilan permintaan. Selanjutnya, fungsi tersebut membaca isi dari file bernama hello.html ke dalam sebuah string menggunakan fs::read_to_string(). Langkah ini berarti ada file bernama hello.html dalam direktori yang sama dengan file eksekusi. Setelah itu, panjang string konten dihitung, dan respons HTTP diformat termasuk status line, panjang konten, dan isi dari file hello.html. Respons tersebut kemudian dikirimkan kembali ke klien melalui TCP stream menggunakan write_all(). Dapat disimpulkan, fungsi handle_connection yang dimodifikasi membaca isi file hello.html, menyusun respons HTTP dengan status 200 OK, dan mengirimkannya kembali ke klien melalui TCP stream.
-![Commit 2 screen capture](assets/images/commit2.png)
+<p>
+    <img src="assets/images/commit2.png" alt=""/>
+</p>
 
 <h3>Commit 3</h3>
 <h4>How to split between response and why the refactoring is needed?</h4>
 Langkah pertama, saya menambahkan file html baru bernama 404.html untuk tampilannya. Kemudian, saya memodifikasi fungsi handle_connection. Fungsi handle_connection yang saya modifikasi berfungsi sebagai server HTTP sederhana. Fungsi ini membaca baris permintaan dari permintaan HTTP client dan memeriksa apakah itu permintaan GET / HTTP/1.1 atau bukan. Berdasarkan pemeriksaan ini, jika permintaan adalah untuk jalur root, maka akan merespons dengan garis status HTTP/1.1 200 OK, membaca konten dari file bernama hello.html, menghitung panjangnya, membangun respons HTTP yang berisi konten ini, dan mengirimkannya kembali ke client. Namun, jika permintaan bukan untuk jalur root, maka akan merespons dengan garis status HTTP/1.1 404 NOT FOUND, membaca konten dari file bernama 404.html, menghitung panjangnya, membangun respons HTTP yang berisi konten ini, dan mengirimkannya kembali ke client. Dapat disimpulkan, fungsi handle_connection yang dimodifikasi ini melayani konten yang berbeda berdasarkan permintaan.
-![Commit 3 screen capture](assets/images/commit3.png)
-
+<p>
+    <img src="assets/images/commit3.png" alt=""/>
+</p>
 <h3>Commit 4</h3>
 <h4>Why it works like that??</h4>
 Dalam fungsi handle_connection yang dimodifikasi, terdapat beberapa perubahan untuk menangani permintaan tertentu, yaitu GET /sleep HTTP/1.1. Jika permintaan adalah GET / HTTP/1.1, maka respons adalah HTTP/1.1 200 OK dengan konten dari hello.html. Namun, jika permintaan adalah GET /sleep HTTP/1.1, server akan delay selama 10 detik sebelum memberikan respons dengan konten dari hello.html. Jika permintaan tidak cocok, respons adalah HTTP/1.1 404 NOT FOUND dengan konten dari 404.html. Setelah menentukan respons, konten file dibaca dan respons HTTP yang sesuai dibangun sebelum ditulis kembali ke client melalui aliran TCP.
