@@ -1,3 +1,5 @@
+<h3>Farah Aura Rosadi - 2206824773 - Pemrograman Lanjut B</h3>
+
 <h3>Commit 1</h3>
 <h4>What is inside the handle_connection method?</h4>
 Fungsi handle_connection bertanggung jawab untuk memproses aliran TCP yang masuk. Ketika handle_connection membaca TCP stream, itu akan membaca setiap baris dari stream tersebut hingga menemui baris kosong. Setelah baris kosong ditemui, akan mengumpulkan semua baris ini ke dalam sebuah vektor yang kemudian akan dicetak sebagai permintaan HTTP untuk inspeksi.
@@ -19,3 +21,7 @@ Dalam fungsi handle_connection yang dimodifikasi, terdapat beberapa perubahan un
 <h3>Commit 5</h3>
 <h4>How the ThreadPool works?</h4>
 Cara kerja dimulai dengan inisialisasi ThreadPool dimana pool thread dibuat dengan jumlah thread worker tertentu serta untuk komunikasi antara thread main dan worker. Setiap thread worker dibuat dengan sebuah closure yang berjalan dalam sebuah infinite loop, menunggu pekerjaan dan menjalankannya saat diterima. Pekerjaan dikirim melalui channel kepada thread worker yang tersedia untuk dieksekusi. Konsep konkurensi diimplementasikan dengan menggunakan Arc<Mutex<mpsc::Receiver<Job>>>, memastikan akses yang aman terhadap channel oleh beberapa thread worker secara bersamaan. Dengan channel mpsc, tugas dapat dikirim dan dieksekusi secara paralel oleh thread worker, menghasilkan mekanisme yang sederhana namun efektif untuk manajemen eksekusi tugas.
+
+<h3>Commit 6</h3>
+<h4>Function improvement</h4>
+Dalam buku Rust, disarankan untuk menggunakan method build daripada new saat menginisialisasi ThreadPool karena new dapat menyebabkan kesalahan jika jumlah thread yang diberikan terlalu kecil. Namun, argumen ini tidak tepat karena ekspektasi dari method new adalah success. Oleh karena itu, disarankan untuk mengganti method new dengan build yang akan return Result. Kemudian, ketika value tersebut di-return ke pemanggil, itu dapat di-unwrapped untuk mendapatkan nilai hasil eksekusi. Penggunaan method build yang mengembalikan Result disarankan karena memberikan kemampuan untuk menangani kemungkinan kesalahan yang mungkin terjadi saat inisialisasi ThreadPool.
