@@ -1,0 +1,3 @@
+<h3>What is inside the handle_connection method?</h3>
+
+Fungsi handle_connection bertanggung jawab untuk memproses aliran TCP yang masuk. Ketika handle_connection membaca TCP stream, itu akan membaca setiap baris dari stream tersebut hingga menemui baris kosong. Setelah baris kosong ditemui, akan mengumpulkan semua baris ini ke dalam sebuah vektor yang kemudian akan dicetak sebagai permintaan HTTP untuk inspeksi.
